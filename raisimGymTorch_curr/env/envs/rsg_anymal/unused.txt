@@ -1,0 +1,31 @@
+ void gaitPenality(){
+
+    /*jointsPos_LF_RH = 0.0;
+    jointsPos_RF_LH = 0.0;
+    jointsVel_LF_RH = 0.0;
+    jointsVel_RF_LH = 0.0;*/
+
+    gaitTerm_Pos_ = 0.0;
+    gaitTerm_Vel_ = 0.0;
+
+    /*for(int i=0; i<3; i++){ //3 joints for leg
+      jointsPos_LF_RH += std::pow( (actual_joint_position_(i + 1) - actual_joint_position_(i+9 + 1)), 2);
+      jointsPos_RF_LH += std::pow( (actual_joint_position_(i+3 + 1) - actual_joint_position_(i+6 + 1)), 2);
+
+      jointsVel_LF_RH += std::pow( (actual_joint_velocities_(i + 1) - actual_joint_velocities_(i+9 +1)), 2);
+      jointsVel_RF_LH += std::pow( (actual_joint_velocities_(i+3 + 1) - actual_joint_velocities_(i+6 + 1)), 2);
+    }
+
+    gaitTerm_Pos_ = jointsPos_LF_RH + jointsPos_RF_LH;
+    gaitTerm_Vel_ = jointsVel_LF_RH +jointsVel_RF_LH;*/
+    for(int i=0; i<3; i++){
+      gaitTerm_Pos_ += std::pow( (actual_joint_position_(i) - actual_joint_position_(i+9)), 2) + std::pow( (actual_joint_position_(i+3) - actual_joint_position_(i+6)), 2);
+      gaitTerm_Vel_ += std::pow( (actual_joint_velocities_(i) - actual_joint_velocities_(i+9)), 2) + std::pow( (actual_joint_velocities_(i+3) - actual_joint_velocities_(i+6)), 2);
+    }
+
+    if(gaitTerm_Pos_ == NAN || isinf(gaitTerm_Pos_)) 
+      gaitTerm_Pos_ = 0.0;
+    if(gaitTerm_Vel_ == NAN || isinf(gaitTerm_Vel_))
+      gaitTerm_Vel_ = 0.0;
+  }
+
